@@ -2,6 +2,7 @@ const cors = require('cors');
 const express = require('express');
 const mongoose = require('mongoose');
 
+const routes = require('./routes');
 const database = require('./config/database');
 
 class App {
@@ -28,7 +29,9 @@ class App {
     });
   }
 
-  routes() { }
+  routes() {
+    this.express.use(routes);
+  }
 }
 
 module.exports = new App().express;

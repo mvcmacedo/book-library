@@ -1,19 +1,19 @@
 const BookModel = require('../models/book');
 
 class BookService {
-  async create(data = {}) {
+  static async create(data = {}) {
     return BookModel.create(data).catch(() => {
       throw new Error('Create book failed');
     });
   }
 
-  async get(filters = {}) {
+  static async get(filters = {}) {
     return BookModel.find(filters).catch(() => {
       throw new Error('Get book failed');
     });
   }
 
-  async update(id, data = {}) {
+  static async update(id, data = {}) {
     if (!id) {
       throw new Error('Book id not found');
     }
@@ -24,7 +24,7 @@ class BookService {
       });
   }
 
-  async delete(id) {
+  static async delete(id) {
     if (!id) {
       throw new Error('Book id not found');
     }

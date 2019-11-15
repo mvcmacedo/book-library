@@ -8,6 +8,7 @@ const BookSchema = new Schema(
     },
     ISBN: {
       type: String,
+      maxlength: 20,
       required: true,
     },
     category: {
