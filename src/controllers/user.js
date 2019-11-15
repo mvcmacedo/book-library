@@ -8,7 +8,7 @@ class UserController {
       const [user] = await UserService.get({ _id });
 
       if (!user) {
-        res.status(404).send({ message: 'User not found' });
+        return res.status(404).send({ message: 'User not found' });
       }
 
       res.status(200).send(user);
@@ -32,7 +32,7 @@ class UserController {
       const data = req.body;
 
       if (data.password !== data.password_check) {
-        res.status(400).send({ message: 'Please, check if your passwords match' });
+        return res.status(400).send({ message: 'Please, check if your passwords match' });
       }
 
       delete data.password_check;
@@ -47,18 +47,11 @@ class UserController {
 
   static async update(req, res) {
     try {
-      const _id = req.params.id;
-
+      const { id: _id } = req.params;
       const { _id: user_id } = req.user;
 
-      if (req._id !== String(user_id)) {
-        res.status(401).send({ message: 'User not authorized' });
-      }
-
-      const [user] = await UserService.get({ _id });
-
-      if (!user) {
-        res.status(404).send({ message: 'User not found' });
+      if (_id !== String(user_id)) {
+        return res.status(401).send({ message: 'User not authorized to update' });
       }
 
       const data = req.body;
@@ -74,17 +67,10 @@ class UserController {
   static async delete(req, res) {
     try {
       const { id: _id } = req.params;
-
       const { _id: user_id } = req.user;
 
       if (_id !== String(user_id)) {
-        res.status(401).send({ message: 'User not authorized' });
-      }
-
-      const [user] = await UserService.get({ _id });
-
-      if (!user) {
-        res.status(404).send({ message: 'User not found' });
+        return res.status(401).send({ message: 'User not authorized to delete' });
       }
 
       await UserService.delete(_id);

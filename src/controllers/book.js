@@ -8,7 +8,7 @@ class BookController {
       const [book] = await BookService.get({ _id });
 
       if (!book) {
-        res.status(404).json({ message: 'Book not found' });
+        return res.status(404).json({ message: 'Book not found' });
       }
 
       res.status(200).send(book);
@@ -41,12 +41,12 @@ class BookController {
 
   static async update(req, res) {
     try {
-      const _id = req.params.id;
+      const { id: _id } = req.params;
 
       const [book] = await BookService.get({ _id });
 
       if (!book) {
-        res.status(404).json({ message: 'Book not found' });
+        return res.status(404).json({ message: 'Book not found' });
       }
 
       const data = req.body;
@@ -66,7 +66,7 @@ class BookController {
       const [book] = await BookService.get({ _id });
 
       if (!book) {
-        res.status(404).json({ message: 'Book not found' });
+        return res.status(404).json({ message: 'Book not found' });
       }
 
       await BookService.delete(_id);
