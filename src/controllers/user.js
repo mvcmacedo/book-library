@@ -1,4 +1,5 @@
 const UserService = require('../services/user');
+const LikeService = require('../services/like');
 
 class UserController {
   static async get(req, res) {
@@ -76,6 +77,20 @@ class UserController {
       await UserService.delete(_id);
 
       res.status(204).send({});
+    } catch ({ message }) {
+      res.status(500).send({ message });
+    }
+  }
+
+  static async books(req, res) {
+    try {
+      const { _id: user_id } = req.user;
+
+      const likes = await LikeService.get({ user: user_id }, { withBooks: true });
+
+      const books = likes.map(({ book }) => book && book);
+
+      res.status(200).send(books);
     } catch ({ message }) {
       res.status(500).send({ message });
     }

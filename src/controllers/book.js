@@ -1,4 +1,5 @@
 const BookService = require('../services/book');
+const LikeService = require('../services/like');
 
 class BookController {
   static async get(req, res) {
@@ -70,6 +71,8 @@ class BookController {
       }
 
       await BookService.delete(_id);
+
+      await LikeService.delete({ book: _id });
 
       res.status(204).send({});
     } catch (err) {

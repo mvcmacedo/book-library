@@ -7,6 +7,8 @@ Router.route('/')
   .get(UserController.list)
   .post(UserController.create);
 
+Router.get('/books', authenticate, UserController.books);
+
 Router.route('/:id')
   .get(UserController.get)
   .put(authenticate, UserController.update)

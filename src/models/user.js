@@ -29,10 +29,6 @@ const UserSchema = new Schema(
       type: String,
       required: true,
     },
-    favorites: {
-      type: [Types.ObjectId],
-      ref: 'Book',
-    },
   },
   {
     timestamps: {
