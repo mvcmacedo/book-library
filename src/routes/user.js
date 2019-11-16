@@ -1,16 +1,23 @@
 const Router = require('express').Router();
 
 const UserController = require('../controllers/user');
+
+const { validate } = require('../middlewares/schema');
 const { authenticate } = require('../middlewares/auth');
+
+const UserSchema = require('./schemas/user');
 
 Router.route('/')
   .get(UserController.list)
-  .post(UserController.create);
+  .post(validate(UserSchema.post()), UserController.create);
 
-Router.get('/books', authenticate, UserController.books);
+Router.use(authenticate);
 
-Router.get('/:id', UserController.get);
-Router.put('/:id', authenticate, UserController.update);
-Router.delete('/:id', authenticate, UserController.delete);
+Router.get('/books', UserController.books);
+
+Router.route('/:id')
+  .get(UserController.get)
+  .put(validate(UserSchema.put()), UserController.update)
+  .delete(validate(UserSchema.delete()), UserController.delete);
 
 module.exports = Router;

@@ -5,6 +5,11 @@ class UserController {
   static async get(req, res) {
     try {
       const { id: _id } = req.params;
+      const { _id: user_id } = req.user;
+
+      if (_id !== String(user_id)) {
+        return res.status(401).send({ message: 'User not authorized to view resource' });
+      }
 
       const [user] = await UserService.get({ _id });
 
@@ -22,7 +27,11 @@ class UserController {
     try {
       const users = await UserService.get();
 
-      res.status(200).send(users);
+      // remove password of the public client response
+      const users_without_password = users
+        .map(({ _doc: { password, ...user } }) => (user));
+
+      res.status(200).send(users_without_password);
     } catch ({ message }) {
       res.status(500).send({ message });
     }

@@ -6,7 +6,6 @@ const LikeSchema = new Schema(
       type: Types.ObjectId,
       ref: 'User',
       required: true,
-      select: false,
     },
     book: {
       type: Types.ObjectId,
