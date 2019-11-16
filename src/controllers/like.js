@@ -4,7 +4,7 @@ const LikeService = require('../services/like');
 class LikeController {
   static async create(req, res) {
     try {
-      const { book_id } = req.params;
+      const { id: book_id } = req.params;
 
       const [book] = await BookService.get({ _id: book_id });
 
@@ -33,7 +33,7 @@ class LikeController {
 
   static async delete(req, res) {
     try {
-      const { book_id } = req.params;
+      const { id: book_id } = req.params;
 
       const [book] = await BookService.get({ _id: book_id });
 

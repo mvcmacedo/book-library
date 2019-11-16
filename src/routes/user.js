@@ -9,9 +9,8 @@ Router.route('/')
 
 Router.get('/books', authenticate, UserController.books);
 
-Router.route('/:id')
-  .get(UserController.get)
-  .put(authenticate, UserController.update)
-  .delete(authenticate, UserController.delete);
+Router.get('/:id', UserController.get);
+Router.put('/:id', authenticate, UserController.update);
+Router.delete('/:id', authenticate, UserController.delete);
 
 module.exports = Router;
