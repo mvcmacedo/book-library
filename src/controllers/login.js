@@ -5,7 +5,7 @@ class LoginController {
     try {
       const { email, password } = req.body;
 
-      const [user] = await UserModel.find({ email });
+      const user = await UserModel.findOne({ email });
 
       if (!user) {
         throw new Error();
@@ -17,7 +17,9 @@ class LoginController {
         throw new Error();
       }
 
-      res.status(201).send({ user: user._doc, token: UserModel.generateToken(user) });
+      const token = UserModel.generateToken(user);
+
+      res.status(201).send({ token });
     } catch (err) {
       res.status(401).send({ message: 'Invalid user/password' });
     }

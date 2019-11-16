@@ -17,10 +17,10 @@ class AuthMiddleware {
       const [, token] = auth.split(' ');
 
       const { _id } = await promisify(jwt.verify)(token, authConfig.secret).catch(() => {
-        return res.status(401).send({ message: 'Invalid token' });
+        throw new Error('Invalid token');
       });
 
-      const [user] = await UserModel.find({ _id });
+      const user = await UserModel.findById(_id);
 
       if (!user) {
         return res.status(404).send({ message: 'User not found' });

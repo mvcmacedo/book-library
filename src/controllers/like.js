@@ -17,7 +17,8 @@ class LikeController {
       const [has_book] = await LikeService.get({ user: user_id, book: book_id });
 
       if (has_book) {
-        return res.status(401).send({ message: 'User has already liked this book' });
+        return res.status(401)
+          .send({ message: 'User has already liked this book' });
       }
 
       await LikeService.create({ user: user_id, book: book_id });
@@ -45,7 +46,8 @@ class LikeController {
       const [has_book] = await LikeService.get({ user: user_id, book: book_id });
 
       if (!has_book) {
-        return res.status(401).send({ message: 'User has already desliked this book' });
+        return res.status(401)
+          .send({ message: 'User has already desliked this book' });
       }
 
       await LikeService.delete({ user: user_id, book: book_id });

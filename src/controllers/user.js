@@ -33,7 +33,8 @@ class UserController {
       const data = req.body;
 
       if (data.password !== data.password_check) {
-        return res.status(400).send({ message: 'Please, check if your passwords match' });
+        return res.status(400)
+          .send({ message: 'Please, check if your passwords match' });
       }
 
       delete data.password_check;
@@ -52,7 +53,8 @@ class UserController {
       const { _id: user_id } = req.user;
 
       if (_id !== String(user_id)) {
-        return res.status(401).send({ message: 'User not authorized to update' });
+        return res.status(401)
+          .send({ message: 'User not authorized to update' });
       }
 
       const data = req.body;
@@ -71,7 +73,8 @@ class UserController {
       const { _id: user_id } = req.user;
 
       if (_id !== String(user_id)) {
-        return res.status(401).send({ message: 'User not authorized to delete' });
+        return res.status(401)
+          .send({ message: 'User not authorized to delete' });
       }
 
       await UserService.delete(_id);
